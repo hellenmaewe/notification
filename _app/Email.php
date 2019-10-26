@@ -9,23 +9,21 @@ class Email {
 
     private $mail = \stdclass::class; // variavel de excesão
 
-    public function __construct() {// construtor
+    public function __construct($smtpDebug, $host, $user, $pass, $smtpSecure, $port, $setFromEmail, $setFromName) {// construtor
 
         $this->mail = new PHPMailer(true);
-
+        $this->mail->SMTPDebug = $smtpDebug;
         $this->mail->isSMTP();                           // Send using SMTP
         $this->mail->setLanguage('br');
         $this->mail->isHTML(true);
         $this->mail->SMTPAuth = true;
         $this->mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
         $this->mail->CharSet = 'utf-8';
-
-        $this->mail->Host = 'smtp.gmail.com';                    // Set the SMTP server to send through
-        $this->mail->Username = 'hellen.maewep@gmail.com';                     // SMTP username
-        $this->mail->Password = '@maewe@123';                               // SMTP password
-        $this->mail->Port = 587;
-
-        $this->mail->setFrom('hellen.maewep@gmail.com', 'Hellen'); // TCP port to connect to
+        $this->mail->Host = $host;                    // Set the SMTP server to send through
+        $this->mail->Username = $user;                     // SMTP username
+        $this->mail->Password = $pass;                               // SMTP password
+        $this->mail->Port = $port;
+        $this->mail->setFrom($setFromEmail, $setFromName); // TCP port to connect to
     }
 
     public function sendMail() {
